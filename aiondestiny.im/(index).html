@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru" autofocus>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=yes">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="http://vk.com/htutich" />
+    <meta name="robots" content="index, follow" />
+
+    <title>Destiny 3.5</title>
+    <link rel="shortcut icon" href="https://aiondestiny.im/images/favicon.png" type="image/x-icon">
+    <link type="text/css" rel="stylesheet" href="https://aiondestiny.im/themes/dark/src/css/basic.style.css?rev=1607235111">
+    <link type="text/css" rel="stylesheet" href="https://aiondestiny.im/themes/dark/src/css/notify.css?rev=1607235111">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap&subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+    <script
+    src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="notify-block"></div>
+
+<div class="menublock indexdesc">
+    <div class="menublockbk"></div>
+    <div class="menucontainer">
+        <div class="menuchangelng">
+            <div class="lng active" id="lang_ru">RU</div>
+            <div class="lng " id="lang_en">EN</div>
+            <div class="lng " id="lang_ch">CH</div>
+        </div>
+        <div class="menulinks">
+            <a class="menulink index menu-item" href="/">Главная</a>
+            <a class="menulink start menu-item" href="/start/start">Скачать клиент</a>
+            <a class="menulink topplayers menu-item" href="/top/players">Топ игроков</a>
+            <a class="menulink toplegions menu-item" href="/top/legions">Топ легионов</a>
+            <a class="menulink forum menu-item" href="http://forum.aiondestiny.im/">Форум</a>
+            <a class="menulink membership menu-item" href="/user/loginn">Премиум</a>
+        </div>
+                            <div class="column is-narrow">
+                    <a class=" installbtn">
+                        
+                    </a>
+                </div>
+                <div class="menuregister"><a class="text menu-item" href="/user/registration/">Регистрация</a></div>
+                    
+        <div class="menuvseti">
+            <a href="https://www.instagram.com/destinyaion/" class="inst"></a>
+            <a href="https://vk.com/club189259300" class="vk"></a>
+            <a href="" class="fb"></a>
+        </div>
+        <div class="menustatus">
+            <div class="serverstatus">Статус сервера: <span style="color: #00d00d;">Online</span></div>
+            <div class="serveronline">
+                Игроков в сети: <span id="sumOnline"></span>
+                <div class="elyonl">
+                    <div class="elyimg"></div>
+                    <div id="elyOnline" class="onlinecount">0</div>
+                </div> 
+                <div class="asmonl">
+                    <div class="asmimg"></div>
+                    <div id="asmoOnline" class="onlinecount">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="containerbk">
+    <div class="contentbk"></div>
+    <div class="globalbdfbvdf1"></div>
+</div>
+
+<script>
+
+    $(function () {
+
+    function playersOnline() {
+        var b = $('.status_online');
+        $.ajax({
+            url: "/api/Online",
+            dataType: "json",
+            cache: false,
+            async: true,
+            success: function (data) {
+                if(document.getElementById('sumOnline')) document.getElementById('sumOnline').innerHTML = data.total_online;
+                if(document.getElementById('asmoOnline')) document.getElementById('asmoOnline').innerHTML = data.online_asmo;
+                if(document.getElementById('elyOnline')) document.getElementById('elyOnline').innerHTML = data.online_ely;
+
+                if(document.getElementById('sumOnlinemob')) document.getElementById('sumOnlinemob').innerHTML = data.total_online;
+                if(document.getElementById('asmoOnlinemob')) document.getElementById('asmoOnlinemob').innerHTML = data.online_asmo;
+                if(document.getElementById('elyOnlinemob')) document.getElementById('elyOnlinemob').innerHTML = data.online_ely;
+            }
+        });
+    }
+    playersOnline();
+    setInterval(()=>{playersOnline()}, 20000);
+
+
+    });
+    $('#lang_ru').on('click', function() {
+        var url = '/api/setlang/';
+        $.ajax({
+            url: url,
+            type: "POST",
+            data:  {YII_CSRF_TOKEN: "cDlxT0t4QXF0RndreUxfQ2N5eGxla1RjZUl2M2lMZ20sE8nhbT0IAIrBPbSqVZTbsJjNzz8GHpf1KLwY02dE7A==", action: 'setlang', lang_site: 'ru'},
+            dataType: "json",
+            cache: false,
+            async: true,
+            success: function(data) {location.reload(true);}
+        });
+        
+    })
+
+    $('#lang_en').on('click', function() {
+        var url = '/api/setlang/';
+        $.ajax({
+            url: url,
+            type: "POST",
+            data:  {YII_CSRF_TOKEN: "cDlxT0t4QXF0RndreUxfQ2N5eGxla1RjZUl2M2lMZ20sE8nhbT0IAIrBPbSqVZTbsJjNzz8GHpf1KLwY02dE7A==", action: 'setlang', lang_site: 'en'},
+            dataType: "json",
+            cache: false,
+            async: true,
+            success: function(data) {location.reload(true);}
+        });
+    })
+    $('#lang_ch').on('click', function() {
+        var url = '/api/setlang/';
+        $.ajax({
+            url: url,
+            type: "POST",
+            data:  {YII_CSRF_TOKEN: "cDlxT0t4QXF0RndreUxfQ2N5eGxla1RjZUl2M2lMZ20sE8nhbT0IAIrBPbSqVZTbsJjNzz8GHpf1KLwY02dE7A==", action: 'setlang', lang_site: 'ch'},
+            dataType: "json",
+            cache: false,
+            async: true,
+            success: function(data) {location.reload(true);}
+        });
+    })
+</script>
+
+
+<div class="indexmob">
+  <div class="globalblock">
+    <div class="globalcontainer">
+      <div class="menustatus">
+          <div class="serverstatus">Статус сервера: <span style="color: #00d00d;">Online</span></div>
+          <div class="serveronline">
+              Игроков в сети: <span id="sumOnlinemob"></span>
+              <div class="elyonl">
+                  <div class="elyimg"></div>
+                  <div id="elyOnlinemob" class="onlinecount">0</div>
+              </div> 
+              <div class="asmonl">
+                  <div class="asmimg"></div>
+                  <div id="asmoOnlinemob" class="onlinecount">0</div>
+              </div>
+          </div>
+      </div>
+      <div class="indexlogo"></div>
+      <div class="indexmenu">
+          <div class="redbtn lk">
+            <a class="text menu-item" href="/user/loginn">Личный кабинет</a>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="indexdesc">
+  <div class="globalblock">
+    <div class="globalcontainer">
+        <div class="rocks">
+          <div class="rock1"></div>
+        </div>
+        <div class="indexlogo"></div>
+        <div class="indexmenu">
+            <div class="redbtn install">
+              <a class="text menu-item" href="/start/start">Установить</a>
+            </div>
+            <div class="redbtn lk">
+              <a class="text menu-item" href="/user/loginn">Личный кабинет</a>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+	
+	<div class="footerblock">
+		<div class="footercontainer">
+			
+			<div class="footermenu">
+				<div class="menulinks">
+					<a class="menulink index menu-item" href="/">Главная</a>
+					<a class="menulink start menu-item" href="/start/start">Скачать клиент</a>
+					<a class="menulink topplayers menu-item" href="/top/players">Топ игроков</a>
+					<a class="menulink toplegions menu-item" href="/top/legions">Топ легионов</a>
+					<a class="menulink forum menu-item" href="http://forum.aiondestiny.im/">Форум</a>
+					<a class="menulink membership menu-item" href="/user/loginn">Премиум</a>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+<script type="text/javascript" src="https://aiondestiny.im/themes/dark/src/js/notify.js?rev=1607235111"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.8.2/js/all.js" integrity="sha384-DJ25uNYET2XCl5ZF++U8eNxPWqcKohUUBUpKGlNLMchM7q4Wjg2CUpjHLaL8yYPH" crossorigin="anonymous"></script>
+</body>
+</html>
